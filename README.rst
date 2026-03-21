@@ -1,3 +1,6 @@
+BASALTHub Readthedocs
+https://basalthub-readthedocs.readthedocs.io/en/latest/
+
 Template for the Read the Docs tutorial
 =======================================
 
