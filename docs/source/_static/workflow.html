@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BASALTHub Downstream Workflow</title>
+<style>
+  :root {
+    --ocean-deep: #03045e;
+    --ocean-dark: #023e8a;
+    --ocean-mid: #0077b6;
+    --ocean-bright: #0096c7;
+    --ocean-light: #00b4d8;
+    --ocean-pale: #48cae4;
+    --ocean-mist: #90e0ef;
+    --ocean-foam: #caf0f8;
+    --ocean-surface: #e0f7fa;
+    --panel-bg: rgba(224, 247, 250, 0.55);
+    --panel-border: rgba(0, 150, 199, 0.25);
+    --white: #ffffff;
+    --text-dark: #012a4a;
+    --text-mid: #014f86;
+    --shadow: 0 4px 24px rgba(0, 119, 182, 0.13), 0 1px 4px rgba(0, 60, 120, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #ffffff;
+    min-height: 100vh;
+    padding: 24px 18px 32px;
+    color: var(--text-dark);
+  }
+
+  .workflow-grid {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 18px;
+  }
+
+  .panel {
+    background: var(--panel-bg);
+    border: 1.5px solid var(--panel-border);
+    border-radius: 18px;
+    padding: 18px 18px 16px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panel:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 40px rgba(0, 119, 182, 0.2);
+  }
+
+  .panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: 18px 18px 0 0;
+    background: var(--ocean-mid);
+  }
+
+  .panel-title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ocean-dark);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .panel-title .badge {
+    background: var(--ocean-mid);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .panel-content {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .illus-box {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 150, 199, 0.2);
+    border-radius: 12px;
+    padding: 10px;
+    flex: 1 1 auto;
+    min-width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .illus-box svg { width: 56px; height: 56px; }
+
+  .illus-label {
+    font-size: 0.7rem;
+    color: var(--text-mid);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .arrow {
+    display: flex;
+    align-items: center;
+    padding-top: 14px;
+    color: var(--ocean-mid);
+    font-size: 1.2rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .span-2 { grid-column: span 2; }
+  .span-3 { grid-column: span 3; }
+  .input-panel { grid-column: 1; }
+
+  .connector-row {
+    grid-column: span 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    height: 32px;
+    position: relative;
+  }
+
+  .connector-row::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--ocean-light) 20%, var(--ocean-mid) 50%, var(--ocean-light) 80%, transparent 100%);
+  }
+
+  .connector-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--ocean-mid);
+    border: 2px solid white;
+    box-shadow: 0 0 8px var(--ocean-light);
+    position: relative;
+    z-index: 1;
+  }
+
+  .connector-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--ocean-dark);
+    background: rgba(202, 240, 248, 0.9);
+    border: 1px solid var(--ocean-pale);
+    border-radius: 10px;
+    padding: 2px 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .output-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .output-chip {
+    font-size: 0.63rem;
+    color: var(--ocean-dark);
+    background: rgba(144, 224, 239, 0.4);
+    border: 1px solid rgba(0, 150, 199, 0.3);
+    border-radius: 8px;
+    padding: 2px 8px;
+    font-weight: 500;
+  }
+
+  .img-placeholder {
+    width: 100%;
+    margin-top: 14px;
+    min-height: 160px;
+    border: 2px dashed rgba(0, 150, 199, 0.45);
+    border-radius: 12px;
+    background: rgba(240, 250, 255, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: var(--ocean-mid);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 18px 12px;
+    text-align: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .img-placeholder:hover {
+    background: rgba(202, 240, 248, 0.5);
+    border-color: rgba(0, 150, 199, 0.7);
+  }
+
+  .panel-img {
+    width: 100%;
+    margin-top: 14px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(0, 150, 199, 0.25);
+    background: #ffffff;
+    padding: 8px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .panel-img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .panel-img-grid .panel-img {
+    margin-top: 0;
+  }
+
+  .panel-img-grid.dbcan-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .panel-img-grid.card-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+
+  .panel-img-grid.card-grid .panel-img {
+    height: 100%;
+  }
+
+  .panel-img-grid.vfdb-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+
+  .panel-img-grid.vfdb-grid .panel-img {
+    height: 100%;
+  }
+
+  .embedded-frame {
+    width: 100%;
+    height: 320px;
+    margin-top: 14px;
+    border: 1.5px solid rgba(0, 150, 199, 0.25);
+    border-radius: 12px;
+    background: #ffffff;
+    display: block;
+  }
+
+  .panel-img.bakta-figure {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .footer-note {
+    text-align: center;
+    color: var(--text-mid);
+    font-size: 0.75rem;
+    margin-top: 28px;
+    font-weight: 500;
+  }
+
+  .flow-band {
+    grid-column: span 3;
+    background: rgba(0, 119, 182, 0.08);
+    border: 1.5px dashed rgba(0, 150, 199, 0.35);
+    border-radius: 16px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .flow-step-box {
+    background: white;
+    border: 1.5px solid var(--ocean-light);
+    border-radius: 10px;
+    padding: 5px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--ocean-dark);
+    white-space: nowrap;
+  }
+
+  .flow-arrow-text {
+    color: var(--ocean-mid);
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  .flow-band-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--ocean-mid);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-right: 6px;
+    white-space: nowrap;
+  }
+
+  .sub-block {
+    flex: 1 1 260px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 150, 199, 0.2);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+
+  .sub-block-title {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--ocean-mid);
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 14px; }
+    .workflow-grid { grid-template-columns: 1fr; }
+    .span-2, .span-3, .connector-row, .flow-band { grid-column: span 1; }
+    .panel-img-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="workflow-grid">
+  <div class="flow-band">
+    <span class="flow-band-title">▶ Full Pipeline</span>
+    <div class="flow-step"><div class="flow-step-box">MAG Bins</div><span class="flow-arrow-text">→</span></div>
+    <div class="flow-step"><div class="flow-step-box">gtdbtk</div><span class="flow-arrow-text">→</span></div>
+    <div class="flow-step"><div class="flow-step-box">bakta</div><span class="flow-arrow-text">→</span></div>
+    <div class="flow-step"><div class="flow-step-box">eggNOG / KEGG</div><span class="flow-arrow-text">+</span></div>
+    <div class="flow-step"><div class="flow-step-box">dbCAN</div><span class="flow-arrow-text">+</span></div>
+    <div class="flow-step"><div class="flow-step-box">CARD</div><span class="flow-arrow-text">+</span></div>
+    <div class="flow-step"><div class="flow-step-box">VFDB</div><span class="flow-arrow-text">→</span></div>
+    <div class="flow-step"><div class="flow-step-box" style="background:#0077B6;color:white;border:none;">Integrated Report</div></div>
+  </div>
+
+  <div class="panel input-panel">
+    <div class="panel-title">Input Genomes <span class="badge">FASTA</span></div>
+    <div class="panel-content">
+      <div class="illus-box"><span class="illus-label">MAG / Bin<br/>FASTA</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">Metadata<br/>Table</span></div>
+    </div>
+    <div class="output-bar">
+      <span class="output-chip">bins/*.fna</span>
+      <span class="output-chip">metadata/</span>
+      <span class="output-chip">sample_groups.tsv</span>
+    </div>
+  </div>
+
+  <div class="panel span-2">
+    <div class="panel-title">gtdbtk <span class="badge">TAXONOMY</span></div>
+    <div class="panel-content">
+      <div class="illus-box"><span class="illus-label">Phylogenetic<br/>Tree</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">Rank<br/>Summary</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">Subtree<br/>SVG Plot</span></div>
+    </div>
+    <div class="output-bar">
+      <span class="output-chip">gtdb_table.tsv</span>
+      <span class="output-chip">phylum_summary.tsv</span>
+      <span class="output-chip">ANI summary</span>
+      <span class="output-chip">subtree.svg</span>
+    </div>
+    <img src="gtdb_subtree_1_with_legend.svg" class="panel-img" alt="gtdbtk phylogenetic subtree 1 with legend" />
+  </div>
+
+  <div class="connector-row">
+    <div class="connector-dot"></div>
+    <div class="connector-label" style="margin:0 8px">MAG Bins → structural annotation (bakta)</div>
+    <div class="connector-dot"></div>
+  </div>
+
+  <div class="panel span-3">
+    <div class="panel-title">bakta <span class="badge">ANNOTATION</span></div>
+    <div class="panel-content">
+      <div class="illus-box"><span class="illus-label">Gene<br/>Prediction</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">Feature<br/>Table .tsv</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">Protein<br/>FAA</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">Bakta<br/>Exports</span></div>
+    </div>
+    <div class="output-bar">
+      <span class="output-chip">results/bakta/</span>
+      <span class="output-chip">results/bakta_exports/</span>
+      <span class="output-chip">merged TSV</span>
+      <span class="output-chip">proteins.faa</span>
+      <span class="output-chip">feature_metrics.tsv</span>
+    </div>
+    <img src="bakta1.png" class="panel-img bakta-figure" alt="bakta annotation figure" />
+  </div>
+
+  <div class="connector-row">
+    <div class="connector-dot"></div>
+    <div class="connector-label" style="margin:0 8px">bakta FAA → functional profiling</div>
+    <div class="connector-dot"></div>
+  </div>
+
+  <div class="panel span-2">
+    <div class="panel-title">emapper / eggNOG mapper <span class="badge">KEGG + eggNOG</span></div>
+    <div style="width:100%;display:flex;gap:12px;flex-wrap:wrap;margin-top:2px;">
+      <div class="sub-block">
+        <div class="sub-block-title">eggNOG database</div>
+        <div class="panel-content">
+          <div class="illus-box"><span class="illus-label">COG<br/>Categories</span></div>
+          <div class="arrow">→</div>
+          <div class="illus-box"><span class="illus-label">COG Count<br/>Matrix</span></div>
+          <div class="arrow">→</div>
+          <div class="illus-box"><span class="illus-label">eggNOG OG<br/>Annotation</span></div>
+        </div>
+        <div class="output-bar" style="margin-top:8px;">
+          <span class="output-chip">eggnog_hits.tsv</span>
+          <span class="output-chip">eggnog_cog_counts.tsv</span>
+          <span class="output-chip">cog_stacked.svg</span>
+        </div>
+        <div class="panel-img-grid">
+          <img src="eggnog_cog_stacked.svg" class="panel-img" alt="eggNOG COG stacked figure" />
+          <img src="eggnog_cog_pca.svg" class="panel-img" alt="eggNOG COG PCA figure" />
+        </div>
+      </div>
+      <div class="sub-block">
+        <div class="sub-block-title">KEGG database</div>
+        <div class="panel-content">
+          <div class="illus-box"><span class="illus-label">KEGG<br/>Pathway Map</span></div>
+          <div class="arrow">→</div>
+          <div class="illus-box"><span class="illus-label">KO Abundance<br/>Profile</span></div>
+          <div class="arrow">→</div>
+          <div class="illus-box"><span class="illus-label">Pathway<br/>Enrichment</span></div>
+        </div>
+        <div class="output-bar" style="margin-top:8px;">
+          <span class="output-chip">kegg_hits.tsv</span>
+          <span class="output-chip">ko_counts.tsv</span>
+          <span class="output-chip">pathway_enrichment.tsv</span>
+          <span class="output-chip">kegg_stacked.svg</span>
+        </div>
+        <div class="panel-img-grid">
+          <img src="kegg_module.svg" class="panel-img" alt="KEGG module figure" />
+          <img src="kegg_ko.svg" class="panel-img" alt="KEGG KO figure" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector-row">
+    <div class="connector-dot"></div>
+    <div class="connector-label" style="margin:0 8px">FAA → resistance &amp; virulence profiling</div>
+    <div class="connector-dot"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">dbCAN <span class="badge">CAZyme</span></div>
+    <div class="panel-content">
+      <div class="illus-box"><span class="illus-label">CAZyme<br/>Annotation</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">PCoA / NMDS<br/>Ordination</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">CAZy Family<br/>Bubble Plot</span></div>
+    </div>
+    <div class="output-bar">
+      <span class="output-chip">*_hits.tsv</span>
+      <span class="output-chip">family_counts.tsv</span>
+      <span class="output-chip">class_counts.tsv</span>
+      <span class="output-chip">stacked.svg</span>
+    </div>
+    <div class="panel-img-grid dbcan-grid">
+      <img src="final_binsets_dbcan_family_stacked.svg" class="panel-img" alt="dbCAN family stacked figure" />
+      <img src="final_binsets_dbcan_class_stacked.svg" class="panel-img" alt="dbCAN class stacked figure" />
+      <img src="final_binsets_dbcan_bubble.svg" class="panel-img" alt="dbCAN bubble figure" />
+      <img src="final_binsets_dbcan_pcoa.svg" class="panel-img" alt="dbCAN PCoA figure" />
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">CARD / RGI <span class="badge">AMR</span></div>
+    <div class="panel-content">
+      <div class="illus-box"><span class="illus-label">Resistance<br/>Gene Detection</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">Sankey<br/>Drug Flow</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">Mechanism<br/>Bubble Plot</span></div>
+    </div>
+    <div class="output-bar">
+      <span class="output-chip">card_hits.tsv</span>
+      <span class="output-chip">drug_class_counts.tsv</span>
+      <span class="output-chip">card_sankey.html</span>
+      <span class="output-chip">mechanism_bubble.svg</span>
+    </div>
+    <div class="panel-img-grid card-grid">
+      <img src="reuse_card_stacked.svg" class="panel-img" alt="CARD stacked figure" />
+      <img src="reuse_card_heatmap_normalized.svg" class="panel-img" alt="CARD heatmap normalized figure" />
+    </div>
+    <iframe src="card_sankey.html" class="embedded-frame" title="CARD sankey chart" loading="lazy"></iframe>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">VFDB <span class="badge">VIRULENCE</span></div>
+    <div class="panel-content">
+      <div class="illus-box"><span class="illus-label">Virulence<br/>Factor Search</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">Virulence<br/>Category Donut</span></div>
+      <div class="arrow">→</div>
+      <div class="illus-box"><span class="illus-label">Virulence<br/>Stacked Plot</span></div>
+    </div>
+    <div class="output-bar">
+      <span class="output-chip">vfdb_hits.tsv</span>
+      <span class="output-chip">category_counts.tsv</span>
+      <span class="output-chip">vfdb_stacked.svg</span>
+      <span class="output-chip">top_VFs summary</span>
+    </div>
+    <div class="panel-img-grid vfdb-grid">
+      <img src="final_binsets_vfdb_stacked.svg" class="panel-img" alt="VFDB stacked figure" />
+      <img src="final_binsets_vfdb_vf_structures.svg" class="panel-img" alt="VFDB virulence factor structures figure" />
+    </div>
+  </div>
+</div>
+
+<div class="footer-note">
+  BASALTHub · Metagenomic Annotation Toolkit &nbsp;|&nbsp; bakta · gtdbtk · emapper · dbCAN · CARD · VFDB
+</div>
+</body>
+</html>

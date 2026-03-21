@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Watch Docs",
+      "type": "shell",
+      "command": "/bin/zsh",
+      "args": [
+        "-lc",
+        "set -euo pipefail; /usr/local/bin/python3 -m pip install -r docs/requirements.txt >/dev/null; rm -rf docs/build/doctrees; rm -f docs/build/html/.buildinfo; exec /usr/local/bin/python3 -m sphinx_autobuild docs/source docs/build/html --host 127.0.0.1 --port 8000"
+      ],
+      "isBackground": true,
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^.*Serving on.*",
+            "endsPattern": "^.*Waiting to detect changes.*"
+          }
+        }
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    }
+  ]
+}

@@ -1,0 +1,809 @@
+/* BASALTHub branding: ocean blue */
+:root {
+  --basalthub-blue: #0077B6;
+  --basalthub-dark: #003f63;
+  --page-bg: #ffffff;
+  --basalthub-banner-height: 56px;
+}
+
+/* lighter sidebar background */
+:root {
+  --sidebar-bg: #ffffff; /* sidebar background back to white */
+}
+
+/* Sidebar width used to calculate main content size */
+:root {
+  --sidebar-width: 320px; /* user requested 320px */
+}
+
+/* Page background (body + sidebar) */
+body, .wy-body-for-nav, .wy-nav-side, .wy-side-nav {
+  background-color: var(--page-bg) !important;
+}
+
+/* Make sidebar links ocean-blue */
+.wy-side-nav a, .wy-side-nav a:visited {
+  color: var(--basalthub-blue) !important;
+}
+
+/* Expanded/current items should highlight by text only, never with a dark background */
+.wy-side-nav .current > a,
+.wy-side-nav .current > a:visited,
+.wy-side-nav .current-page-ancestor > a,
+.wy-side-nav .current-page-ancestor > a:visited,
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.current > a:hover,
+.wy-menu-vertical li.current > a:focus,
+.wy-menu-vertical li.current-page-ancestor > a,
+.wy-menu-vertical li.current-page-ancestor > a:hover,
+.wy-menu-vertical li.current-page-ancestor > a:focus,
+.wy-menu-vertical li.toctree-l1.current > a,
+.wy-menu-vertical li.toctree-l1.current > a:hover,
+.wy-menu-vertical li.toctree-l1.current > a:focus,
+.wy-menu-vertical li.toctree-l2.current > a,
+.wy-menu-vertical li.toctree-l2.current > a:hover,
+.wy-menu-vertical li.toctree-l2.current > a:focus {
+  color: var(--basalthub-blue) !important;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+/* Expanded tree container should also stay white instead of theme grey */
+.wy-menu-vertical li.current,
+.wy-menu-vertical li.current > ul,
+.wy-menu-vertical li.current-page-ancestor,
+.wy-menu-vertical li.current-page-ancestor > ul,
+.wy-menu-vertical li.toctree-l1.current,
+.wy-menu-vertical li.toctree-l1.current > ul,
+.wy-menu-vertical li.toctree-l2.current,
+.wy-menu-vertical li.toctree-l2.current > ul {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove residual separator lines/borders in expanded sidebar trees */
+.wy-menu-vertical,
+.wy-menu-vertical ul,
+.wy-menu-vertical li,
+.wy-menu-vertical li a,
+.wy-menu-vertical li.current,
+.wy-menu-vertical li.current > ul,
+.wy-menu-vertical li.current-page-ancestor,
+.wy-menu-vertical li.current-page-ancestor > ul {
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.wy-menu-vertical li::before,
+.wy-menu-vertical li::after,
+.wy-menu-vertical ul::before,
+.wy-menu-vertical ul::after,
+.wy-menu-vertical li a::before,
+.wy-menu-vertical li a::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Sidebar brand area: smaller logo + BASALTHub text side by side */
+.wy-side-nav-search > a.icon.icon-home {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--basalthub-dark) !important;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.wy-side-nav-search > a.icon.icon-home::before {
+  display: none;
+  content: none !important;
+}
+
+.wy-side-nav-search > a.icon.icon-home.icon-home::before,
+.wy-side-nav-search a.icon-home::before,
+.icon.icon-home::before {
+  content: none !important;
+  display: none !important;
+}
+
+.wy-side-nav-search > a.icon.icon-home img.logo,
+.wy-side-nav-search .logo {
+  max-height: 34px !important;
+  width: auto !important;
+  margin: 0 !important;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Place the logo to the left of the BASALTHub text (HTML has text then img) */
+.wy-side-nav-search > a.icon.icon-home img.logo {
+  order: -1;
+  margin-right: 8px !important;
+  margin-left: 0 !important;
+}
+
+/* Keep top banner ocean blue (but keep sidebar itself white) */
+.wy-nav-top, .rst-versions {
+  background-color: var(--basalthub-blue) !important;
+}
+/* Ensure the sidebar (navigation area) uses the white page background */
+.wy-side-nav, .wy-side-nav-search, .wy-side-scroll, .wy-menu-vertical {
+  background-color: var(--sidebar-bg) !important;
+}
+
+.wy-menu-vertical .caption {
+  background-color: transparent !important;
+  padding: 8px 12px !important;
+  border-radius: 0 !important;
+  margin: 6px 0 8px 0 !important;
+}
+
+.wy-menu-vertical .caption-text {
+  background: transparent !important;
+}
+
+
+/* Force-override any inline `background` styles put into the markup by the theme */
+.wy-side-nav-search[style] {
+  background: var(--page-bg) !important;
+}
+
+/* Top nav links remain white for contrast */
+.wy-nav-top a, .wy-nav-top .wy-brand {
+  color: white !important;
+}
+
+/* 顶部 BASALTHub 导航栏左侧标题 */
+#basalthub-banner .basalthub-title {
+  margin-right: 8px;
+}
+
+/* Links throughout the docs use BASAL blue */
+a, a:visited {
+  color: var(--basalthub-blue);
+}
+
+/* Alabaster and generic fallbacks: ensure white page background */
+.sidebar, .sidebar .logo, .header, header {
+  background-color: var(--page-bg) !important;
+  color: var(--basalthub-blue) !important;
+}
+
+/* Headings accent */
+h1, h2, h3, h4 {
+  border-bottom-color: rgba(0,0,0,0.05);
+}
+
+/* Hide the top breadcrumb bar and the divider line above page content */
+.wy-breadcrumbs,
+.rst-content .wy-breadcrumbs {
+  display: none !important;
+}
+
+.wy-nav-content {
+  border-top: none !important;
+}
+
+.rst-content > div[role="navigation"] hr,
+.rst-content hr.docutils,
+.rst-content .wy-breadcrumbs + hr,
+.wy-nav-content-wrap .wy-nav-content > hr {
+  display: none !important;
+}
+
+/* Top banner for BASALTHub */
+#basalthub-banner {
+  background: var(--basalthub-blue);
+  color: white;
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  z-index: 9999;
+  margin: 0;
+  min-height: var(--basalthub-banner-height);
+}
+
+#basalthub-banner .banner-inner {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  min-height: var(--basalthub-banner-height);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 24px;
+}
+
+.basalthub-title {
+  color: white !important;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.15em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  transform-origin: left center;
+  transition: transform 0.18s ease, font-weight 0.18s ease, opacity 0.18s ease;
+  text-decoration: none !important;
+}
+
+.basalthub-banner-spacer {
+  flex: 1;
+  min-width: 0;
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
+  text-decoration: none !important;
+  transform-origin: center;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  flex: 0 0 auto;
+}
+
+.github-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.github-stat-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 78px;
+  flex: 0 0 78px;
+}
+
+#basalthub-banner .banner-inner > :first-child {
+  margin-left: 0;
+}
+
+#basalthub-banner .banner-inner > :last-child {
+  margin-right: 0;
+}
+
+.github-stat {
+  color: white !important;
+  text-decoration: none !important;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transform-origin: center;
+  transition: transform 0.18s ease, font-weight 0.18s ease, opacity 0.18s ease;
+}
+
+.github-link:hover,
+.github-stat:hover,
+.basalthub-title:hover {
+  opacity: 0.96;
+  transform: scale(1.08);
+  text-decoration: none !important;
+}
+
+.github-stat:hover,
+.basalthub-title:hover {
+  font-weight: 800;
+}
+
+/* Sidebar directory links: ocean blue, hover zoom without reflow */
+.wy-menu-vertical a,
+.wy-menu-vertical a:visited {
+  color: var(--basalthub-blue) !important;
+}
+.wy-menu-vertical .caption-text {
+  color: #000 !important;
+}
+
+.wy-menu-vertical .caption-text .basalthub-caption-link,
+.wy-menu-vertical .caption-text .basalthub-caption-link:visited {
+  color: #000 !important;
+  text-decoration: none !important;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+}
+
+.wy-menu-vertical .caption-text .basalthub-caption-link:hover,
+.wy-menu-vertical .caption-text .basalthub-caption-link:focus {
+  color: var(--basalthub-blue) !important;
+  text-decoration: none !important;
+  font-weight: 800;
+}
+
+.wy-menu-vertical .caption,
+.wy-menu-vertical p.caption {
+  text-align: center !important;
+}
+
+.wy-menu-vertical li.toctree-l1,
+.wy-menu-vertical li.toctree-l2,
+.wy-menu-vertical li.toctree-l3 {
+  overflow: visible;
+}
+
+.wy-menu-vertical li > a {
+  display: block;
+  line-height: 1.6;
+  min-height: 2.4em;
+  transform-origin: left center;
+  transition: transform 0.18s ease, font-weight 0.18s ease, color 0.18s ease;
+  will-change: transform;
+}
+
+.wy-menu-vertical li > a:hover,
+.wy-menu-vertical li > a:focus {
+  /* remove the light background block on hover, keep color/weight */
+  background-color: transparent !important;
+  background: transparent !important;
+  color: var(--basalthub-blue) !important;
+  font-weight: 800;
+  transform: none !important;
+  text-decoration: none;
+}
+
+/* Keep top-level items from shifting when hovered so the right arrow stays fixed */
+.wy-menu-vertical li.toctree-l1 > a,
+.wy-menu-vertical li.toctree-l1 > a:hover,
+.wy-menu-vertical li.toctree-l1 > a:focus {
+  transform: none !important;
+}
+
+.wy-menu-vertical li.toctree-l1 > a .basalthub-nav-arrow {
+  transform-origin: center;
+}
+
+/* RTD theme adds a grey background for current/expanded parent items.
+   Remove it so expanded top-level items stay clean on hover. */
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.current > a:hover,
+.wy-menu-vertical li.current > a:focus,
+.wy-menu-vertical li.current-page-ancestor > a,
+.wy-menu-vertical li.current-page-ancestor > a:hover,
+.wy-menu-vertical li.current-page-ancestor > a:focus,
+.wy-menu-vertical li.toctree-l1.current > a,
+.wy-menu-vertical li.toctree-l1.current > a:hover,
+.wy-menu-vertical li.toctree-l1.current > a:focus,
+.wy-menu-vertical li.toctree-l2.current > a,
+.wy-menu-vertical li.toctree-l2.current > a:hover,
+.wy-menu-vertical li.toctree-l2.current > a:focus {
+  background-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Prevent theme hover darkening on all sidebar states */
+.wy-menu-vertical a:hover,
+.wy-menu-vertical a:focus,
+.wy-menu-vertical li.current > a:hover,
+.wy-menu-vertical li.current-page-ancestor > a:hover,
+.wy-nav .wy-menu-vertical a:hover {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* 保持每一行间距稳定，避免 hover 后把相邻目录项挤开 */
+.wy-menu-vertical li {
+  margin: 2px 0;
+}
+
+/* Sidebar submenu expand/collapse: smoother reveal */
+.wy-menu-vertical li ul {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.28s ease, opacity 0.22s ease, padding-top 0.22s ease;
+  padding-top: 0;
+}
+
+.wy-menu-vertical li.current > ul,
+.wy-menu-vertical li.current.current-page-ancestor > ul,
+.wy-menu-vertical li.current-page-ancestor > ul,
+.wy-menu-vertical li.toctree-l1.current > ul,
+.wy-menu-vertical li.toctree-l2.current > ul {
+  max-height: 1200px;
+  opacity: 1;
+  padding-top: 4px;
+}
+
+.wy-menu-vertical li ul li > a {
+  transition: transform 0.18s ease, font-weight 0.18s ease, color 0.18s ease, background-color 0.18s ease, padding-left 0.22s ease;
+}
+
+.wy-menu-vertical li.current > ul > li > a,
+.wy-menu-vertical li.current-page-ancestor > ul > li > a {
+  padding-left: 1.35em;
+}
+
+/* Clearer indentation for subtitle levels in the sidebar */
+.wy-menu-vertical li.toctree-l2 > a {
+  padding-left: 2.2em !important;
+}
+
+.wy-menu-vertical li.toctree-l3 > a {
+  padding-left: 2.4em !important;
+}
+
+/* Hide generic left-side theme markers, but keep real expand buttons so we can restyle them */
+.wy-menu-vertical li.toctree-l1 > a::before,
+.wy-menu-vertical li.toctree-l2 > a::before,
+.wy-menu-vertical li.toctree-l3 > a::before {
+  content: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  border: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.wy-menu-vertical li.toctree-l1 > a,
+.wy-menu-vertical li.toctree-l2 > a,
+.wy-menu-vertical li.toctree-l3 > a {
+  padding-left: 0.75em !important;
+}
+
+/* Restyle the real RTD expand button: move it to the right and make it cleaner */
+.wy-menu-vertical li {
+  position: relative;
+}
+
+.wy-menu-vertical li > a {
+  position: relative;
+  padding-right: 2em !important;
+}
+
+.wy-menu-vertical li button.toctree-expand {
+  position: absolute !important;
+  right: 0.6em !important;
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  float: none !important;
+  display: inline-block !important;
+  background: transparent !important;
+  border: none !important;
+  color: var(--basalthub-blue) !important;
+  opacity: 0.95 !important;
+  line-height: 1 !important;
+  z-index: 2;
+}
+
+/* Hide the theme expand button entirely now that we inject our own arrow */
+.wy-menu-vertical li button.toctree-expand,
+.wy-menu-vertical li.current > a button.toctree-expand,
+.wy-menu-vertical li.current-page-ancestor > a button.toctree-expand,
+.wy-menu-vertical li.on > a button.toctree-expand {
+  display: none !important;
+}
+
+/* Injected custom arrow on the right side of top-level sidebar links */
+.wy-menu-vertical li.toctree-l1 > a {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+.wy-menu-vertical li.toctree-l1 > a .basalthub-nav-arrow {
+  display: inline-block !important;
+  margin-left: auto;
+  flex: 0 0 auto;
+  color: var(--basalthub-blue) !important;
+  font-size: 1.35em;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.95;
+  transition: transform 0.18s ease, opacity 0.18s ease, font-size 0.18s ease;
+}
+
+.wy-menu-vertical li.toctree-l1 > a:hover .basalthub-nav-arrow,
+.wy-menu-vertical li.toctree-l1 > a:focus .basalthub-nav-arrow {
+  transform: scale(1.18);
+}
+
+.wy-menu-vertical li.toctree-l1.current > a .basalthub-nav-arrow,
+.wy-menu-vertical li.toctree-l1.current-page-ancestor > a .basalthub-nav-arrow,
+.wy-menu-vertical li.toctree-l1.on > a .basalthub-nav-arrow {
+  transform: rotate(90deg);
+  opacity: 1;
+}
+
+/* Allow clicking the main title to collapse/expand its child list */
+.wy-menu-vertical li.toctree-l1.basalthub-collapsed > ul {
+  display: none !important;
+  max-height: 0 !important;
+  opacity: 0 !important;
+  overflow: hidden !important;
+}
+
+.wy-menu-vertical li.toctree-l1.basalthub-collapsed > a .basalthub-nav-arrow {
+  transform: rotate(0deg) !important;
+}
+
+.wy-menu-vertical li button.toctree-expand::before {
+  content: "›" !important;
+  font-family: inherit !important;
+  font-size: 1.1em !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+}
+
+.wy-menu-vertical li.current > a button.toctree-expand,
+.wy-menu-vertical li.current-page-ancestor > a button.toctree-expand,
+.wy-menu-vertical li.on > a button.toctree-expand {
+  transform: translateY(-50%) rotate(90deg) !important;
+  opacity: 1 !important;
+}
+
+/* Strongly hide the theme's current-page square/expand marker on the left */
+.wy-menu-vertical li.current > a span.toctree-expand,
+.wy-menu-vertical li.current-page-ancestor > a span.toctree-expand,
+.wy-menu-vertical li.current > a .toctree-expand,
+.wy-menu-vertical li.current-page-ancestor > a .toctree-expand,
+.wy-menu-vertical li.current > a::before,
+.wy-menu-vertical li.current-page-ancestor > a::before {
+  content: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+#basalthub-banner a,
+#basalthub-banner a:visited {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+#basalthub-banner a:hover,
+#basalthub-banner a:focus,
+#basalthub-banner a:active {
+  text-decoration: none !important;
+}
+
+/* Ensure the theme header doesn't visually collide with our banner */
+.wy-nav-top, header {
+  margin-top: 0;
+}
+
+/* 让整体布局从 banner 下方开始，banner 本身横跨整个页面顶部 */
+.wy-grid-for-nav {
+  margin-top: 0 !important;
+}
+
+.wy-nav-side {
+  top: 0 !important;
+  height: 100% !important;
+}
+
+.wy-side-scroll {
+  height: 100%;
+}
+
+/* 避免 RTD 主题内容区自带上边距导致 banner 看起来不在最顶端 */
+.wy-nav-content-wrap,
+.wy-nav-content {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* ===== 隐藏 ReadTheDocs 自带的顶部栏（banner / top bar） ===== */
+/* 通过 display:none 隐藏常见的 RTD 顶部元素，并移除为其保留的顶部间距 */
+#readthedocs-banner,
+.readthedocs-banner,
+.rst-versions,
+.rst-other-versions,
+.wy-nav-top,
+.wy-header,
+.rtd-header,
+.rtd-toolbar,
+.rtd-search,
+.topbar,
+.readthedocs-data {
+  display: none !important;
+}
+
+.wy-side-nav-search .version,
+.wy-side-nav-search > div.version,
+.wy-side-nav-search .rst-current-version,
+.wy-side-nav-search .rst-other-versions {
+  display: none !important;
+}
+
+/* 清除顶部留白，避免页面内容被下移 */
+.wy-nav-content,
+.wy-side-nav,
+.wy-body-for-nav,
+body,
+html {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* 某些主题会在 body 或根元素上添加额外的 padding/top，需要保证内容靠上 */
+@media (min-width: 0px) {
+  .wy-nav-content .document {
+    margin-top: 0 !important;
+  }
+}
+
+/* Prev/Next footer buttons: rounded rectangle with ocean-blue border,
+   hover -> filled blue background and white text */
+.rst-footer-buttons a.btn {
+  display: inline-block;
+  border-radius: 8px !important;
+  border: 2px solid var(--basalthub-blue) !important;
+  padding: 6px 12px !important;
+  background: transparent !important;
+  color: var(--basalthub-blue) !important;
+  text-decoration: none !important;
+  transition: background-color 0.18s ease, color 0.18s ease, transform 0.12s ease;
+}
+.rst-footer-buttons a.btn .fa {
+  margin-right: 6px;
+}
+.rst-footer-buttons a.btn:hover,
+.rst-footer-buttons a.btn:focus {
+  background: var(--basalthub-blue) !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+}
+
+/* Make the 'Built with Sphinx...' text smaller while keeping copyright readable */
+footer {
+  font-size: 12px !important;
+}
+footer div[role="contentinfo"] p {
+  font-size: 14px !important;
+  margin: 0 0 6px 0;
+}
+
+/* Reduce the right margin/padding of the main page content so the page
+   uses more horizontal space (shrinks the right gutter). */
+.wy-nav-content {
+  padding-right: 12px !important;
+}
+.wy-nav-content .rst-content,
+.wy-nav-content .document {
+  padding-right: 12px !important;
+}
+
+/* On wide screens, allow the main content to be wider so there's less right gutter */
+@media screen and (min-width: 1100px) {
+  .wy-nav-content {
+    max-width: 1100px !important;
+  }
+}
+
+/* Strong overrides to eliminate the remaining right gutter and allow content to expand */
+:root {
+  --sidebar-width: 320px;
+}
+
+/* Ensure the sidebar area uses the fixed width */
+.wy-nav-side, .wy-side-scroll, .wy-side-nav, .wy-menu-vertical {
+  width: var(--sidebar-width) !important;
+  min-width: var(--sidebar-width) !important;
+  box-sizing: border-box !important;
+}
+
+/* Allow the content area to flexibly fill the remaining space */
+.wy-nav-content-wrap {
+  margin-left: var(--sidebar-width) !important;
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.wy-nav-content {
+  width: calc(100% - var(--sidebar-width)) !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding-left: 24px !important;
+  padding-right: 12px !important;
+  box-sizing: border-box !important;
+}
+
+/* Remove any remaining centering/max-width on document/content */
+.wy-nav-content .rst-content,
+.wy-nav-content .document,
+.rst-content,
+.document {
+  max-width: none !important;
+  width: auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-right: 12px !important;
+}
+
+/* Ensure background on the right side (outside content) is white */
+body, .wy-body-for-nav, .wy-nav-content-wrap, .wy-nav-content, .rst-content {
+  background-color: var(--page-bg) !important;
+}
+
+/* Remove the 1100px cap if present in theme styles */
+.wy-nav-content[style] {
+  max-width: none !important;
+  width: calc(100% - var(--sidebar-width)) !important;
+}
+
+/* Make the main content area fluid and fill remaining space next to the sidebar.
+   Use a sidebar-width variable so resizing the sidebar is straightforward. */
+@media screen and (min-width: 768px) {
+  .wy-nav-content-wrap {
+    margin-left: var(--sidebar-width) !important;
+  }
+
+  .wy-nav-side, .wy-side-scroll {
+    width: var(--sidebar-width) !important;
+    min-width: var(--sidebar-width) !important;
+  }
+
+  .wy-nav-content {
+    max-width: none !important;
+    width: calc(100% - var(--sidebar-width)) !important;
+    margin: 0 !important;
+    padding-left: 24px !important;
+    padding-right: 12px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Ensure the visual right area (outside the main content) is white */
+.wy-nav-content-wrap,
+.wy-nav-content,
+.wy-nav-content .rst-content,
+.rst-content {
+  background-color: var(--page-bg) !important;
+}
+
+/* Remove any internal max-width so the content can expand wider */
+.wy-nav-content .rst-content,
+.rst-content,
+.document {
+  max-width: none !important;
+  width: auto !important;
+}
+
+/* If the theme sets a centered container with margins, nullify them to allow full width */
+.wy-nav-content .rst-content .section,
+.wy-nav-content .section {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Keep mobile behavior unchanged: stacked layout with no forced widths */
+@media screen and (max-width: 767px) {
+  .wy-nav-content-wrap { margin-left: 0 !important; }
+  .wy-nav-side, .wy-side-scroll { width: auto !important; }
+  .wy-nav-content { width: auto !important; max-width: none !important; padding: 1.618em !important; }
+}
